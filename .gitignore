@@ -1,0 +1,115 @@
+# Build directories and files
+/build/
+/cmake-build-*/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+*.cmake
+
+# Compiled binaries and libraries
+*.o
+*.obj
+*.a
+*.lib
+*.so
+*.so.*
+*.dylib
+*.dll
+*.exe
+*.out
+*.app
+*.exe.a
+
+# IDE and Editor files
+.vscode/
+.idea/
+.vs/
+*.sln
+*.vcxproj*
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Editor backup files
+*.bak
+*.backup
+*.orig
+
+# CMake temporary files
+CMakeLists.txt.user
+cmake_build_debug/
+cmake_build_release/
+
+# OS specific files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+desktop.ini
+
+# Dependency cache
+vcpkg_installed/
+.conan/
+.conan2/
+
+# Python cache (if any scripts are used)
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+
+# Node modules (if any web assets)
+node_modules/
+
+# Large binary asset files (keep git-lfs for these if needed)
+*.zip
+*.tar.gz
+*.rar
+
+# Log files
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+
+# Large asset directories (use Git LFS or host separately)
+# Uncomment these if resources are too large for GitHub
+/resources/
+/doc/
+
+# Third-party library headers (install via package managers or CMake)
+/include/GLFW/
+/include/KHR/
+/include/assimp/
+/include/freetype/
+/include/glm/
+/include/glad/
+/include/stb_image.h
+/include/miniaudio.h
+/include/ft2build.h
+
+# macOS specific
+.AppleDouble
+.LSOverride
+
+# Linux specific
+.directory
+
+# Windows specific
+Thumbs.db
+.gitkeep
+*.lnk
+
+# Project specific
+CG-GAME/
+*.suo
+proj.txt
+
+# Exclude build artifacts but keep the build folder structure if needed
+# build/* is ignored, but you can track build/.gitkeep

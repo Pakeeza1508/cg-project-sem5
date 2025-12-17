@@ -1,0 +1,47 @@
+# Auto detect text files and perform LF normalization
+* text=auto
+# Binary files
+*.exe binary
+*.dll binary
+*.so binary
+*.dylib binary
+*.a binary
+*.o binary
+
+# Media files (already available in resources folder, no need to commit large assets)
+*.mp3 binary
+*.wav binary
+*.ogg binary
+*.flac binary
+
+# Image files
+*.jpg binary
+*.jpeg binary
+*.png binary
+*.gif binary
+*.bmp binary
+*.tga binary
+
+# 3D Model files (large, can be tracked separately)
+*.obj binary
+*.mtl binary
+*.fbx binary
+*.blend binary
+
+# Source code files
+*.cpp diff=cpp
+*.h diff=cpp
+*.hpp diff=cpp
+*.c diff=cpp
+*.glsl diff=cpp
+*.vert diff=cpp
+*.frag diff=cpp
+*.geom diff=cpp
+
+# Build system
+CMakeLists.txt diff=text
+*.cmake diff=text
+
+# Documentation
+*.md diff=text
+*.txt diff=text
