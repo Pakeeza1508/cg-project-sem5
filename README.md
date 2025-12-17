@@ -64,6 +64,46 @@ Drone-Shooter.exe  # Windows
 
 ## 📦 Requirements
 
+### 💻 System Requirements
+
+#### Minimum Specifications
+- **OS**: Windows 10/11, macOS 10.14+, Ubuntu 18.04+ (or any modern Linux)
+- **CPU**: Intel Core i3 / AMD Ryzen 3 or equivalent (dual-core, 2.0 GHz+)
+- **RAM**: 4 GB
+- **GPU**: OpenGL 3.3 compatible graphics card
+  - Intel HD Graphics 4000 or newer
+  - NVIDIA GeForce GTX 650 or newer
+  - AMD Radeon HD 7750 or newer
+- **Storage**: 500 MB free disk space
+- **Display**: 800x600 minimum resolution
+
+#### Recommended Specifications
+- **CPU**: Intel Core i5 / AMD Ryzen 5 or better (quad-core, 2.5 GHz+)
+- **RAM**: 8 GB
+- **GPU**: Dedicated GPU with 2GB VRAM
+  - NVIDIA GeForce GTX 1050 or newer
+  - AMD Radeon RX 560 or newer
+- **Storage**: 1 GB free disk space
+- **Display**: 1920x1080 resolution
+
+#### Graphics Requirements
+- **OpenGL Version**: 3.3 Core Profile or higher
+- **Driver Support**: Updated graphics drivers recommended
+
+**Check OpenGL Support:**
+```bash
+# Linux
+glxinfo | grep "OpenGL version"
+
+# macOS
+system_profiler SPDisplaysDataType
+
+# Windows
+Download OpenGL Extensions Viewer or GPU-Z
+```
+
+### ⚙️ Build Tools & Dependencies
+
 ### General
 - **CMake**: 3.5 or higher
 - **C++ Compiler**: C++17 support (GCC 7+, Clang 5+, MSVC 2017+)
@@ -273,6 +313,26 @@ For detailed technical information, architecture diagrams, code flow analysis, a
 
 ## 🆘 Troubleshooting
 
+### System Compatibility Check
+
+#### Check if Your Laptop Can Run the Game
+```bash
+# Windows (PowerShell)
+Get-WmiObject Win32_VideoController | Select-Object Name, DriverVersion
+
+# Linux
+lspci | grep VGA
+glxinfo | grep "OpenGL"
+
+# macOS
+system_profiler SPDisplaysDataType | grep "Chipset Model"
+```
+
+**Common Issues:**
+- **Integrated Graphics**: Most modern Intel/AMD integrated graphics (2015+) support OpenGL 3.3
+- **Older Laptops**: Laptops before 2012 may not support OpenGL 3.3
+- **Virtual Machines**: May have limited OpenGL support (use bare metal if possible)
+
 ### CMake Configuration Issues
 ```bash
 # Clear build directory and reconfigure
@@ -293,10 +353,30 @@ cmake ..
 3. Check verbose output: `cmake --build . --verbose`
 
 ### Runtime Issues
-- **No window appears**: Check OpenGL support (`glxinfo` on Linux, System Report on macOS)
-- **Black screen**: Verify graphics drivers are updated
-- **No sound**: Check audio device permissions
-- **Low FPS**: Reduce render quality or close background applications
+- **No window appears**: Check OpenGL support (see System Compatibility Check above)
+- **Black screen**: Update graphics drivers from manufacturer's website
+- **"OpenGL 3.3 not supported" error**: Your GPU is too old - upgrade or use a different machine
+- **Crash on startup**: Ensure all dependencies are installed correctly
+- **No sound**: Check audio device permissions and verify speakers/headphones work
+- **Low FPS (<30 FPS)**: 
+  - Close background applications
+  - Update graphics drivers
+  - Reduce screen resolution
+  - Check if laptop is in power-saving mode (switch to high performance)
+- **Game freezes**: Check CPU/RAM usage - may need to close other programs
+
+### Performance Tips for Laptops
+1. **Plug in your laptop** - Battery mode may limit GPU performance
+2. **Update drivers** - Get latest graphics drivers from Intel/AMD/NVIDIA
+3. **Close background apps** - Free up RAM and CPU
+4. **Check thermals** - Overheating can cause throttling
+5. **Use dedicated GPU** (if available) - Set the game to use NVIDIA/AMD GPU instead of integrated graphics
+
+**Windows - Force Dedicated GPU:**
+```
+Settings → System → Display → Graphics Settings
+→ Add "Drone-Shooter.exe" → Options → High Performance
+```
 
 ## 🎬 Development Timeline
 
