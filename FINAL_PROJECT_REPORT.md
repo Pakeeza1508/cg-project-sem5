@@ -1186,6 +1186,6 @@ opengl-drone-shooter/
 
 ---
 
-**Report Generated**: December 17, 2025
-**Project Repository**: [GitHub - opengl-drone-shooter](https://github.com/EtoileScintillante/opengl-drone-shooter)
-**Report Author**: Project Analysis AI Assistant
+**Report Generated**: December 17, 2025  
+**Project Repository**: [GitHub - cg-project-sem5](https://github.com/Pakeeza1508/cg-project-sem5)  
+**Report Author**: Comprehensive Analysis by GitHub Copilot
