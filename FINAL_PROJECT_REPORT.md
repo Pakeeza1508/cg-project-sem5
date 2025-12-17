@@ -344,7 +344,200 @@ Main Game Loop (main.cpp)
         └── std::map<char, Character>
 ```
 
-### 4.3 Data Flow
+### 4.3 UML Class Diagram
+
+The following diagram illustrates the detailed class structure and relationships in the Drone Shooter project:
+
+```mermaid
+classDiagram
+    class Player {
+        +glm::vec3 Position
+        +glm::vec3 Front, Up, Right
+        +float Yaw, Pitch
+        +float MovementSpeed
+        +float MouseSensitivity
+        +bool shot
+        +int kills
+        +float health
+        +bool isAlive
+        +AABBox boundingBox
+        +Model gun
+        +Shader shader
+        +processKeyboardMouse(window, deltaTime)
+        +GetViewMatrix() glm::mat4
+        +getProjectionMatrix() glm::mat4
+        +fire()
+        +gotAttacked(damage)
+        +updateKills()
+        +controlPlayerRendering()
+    }
+
+    class Enemy {
+        +glm::vec3 position
+        +AABBox boundingBox
+        +bool isDead
+        +bool canDamage
+        +float range
+        +glm::vec3 laserDirection
+        +Model drone
+        +Model laserBeam
+        +Shader shaderDrone
+        +Shader shaderLaser
+        +controlEnemyLife(playerPos, viewMatrix, projMatrix)
+        +spawn()
+        +attack()
+        +moveToPlayer()
+        +gotHit()
+        +getLifeState() bool
+        +setDefaultValues()
+    }
+
+    class EnemyManager {
+        +vector~shared_ptr~Enemy~~ enemies
+        +int enemyCount
+        +float spawnTime
+        +float currentTime
+        +float deltaTime
+        +manage(playerPos, viewMatrix, projMatrix)
+        +reset()
+    }
+
+    class World {
+        +string environmentType
+        +glm::mat4 view
+        +glm::mat4 projection
+        +Model trees
+        +Model surroundings
+        +Skybox skybox
+        +Shader shaderModel
+        +Shader shaderGround
+        +Draw(view, projection)
+        +setupWorld()
+        +drawTrees()
+        +drawSurroundings()
+        +drawGround()
+        +drawSkyBox()
+    }
+
+    class CollisionDetector {
+        +Detect(player, manager)
+        -PlayerAttacksEnemy(player, enemy)
+        -EnemyAttacksPlayer(player, enemy)
+    }
+
+    class AABBox {
+        +glm::vec3[2] bounds
+        +isValid() bool
+        +fix()
+        +intersect(ray, length) bool
+    }
+
+    class Ray {
+        +glm::vec3 orig
+        +glm::vec3 dir
+        +glm::vec3 invdir
+        +int[3] sign
+    }
+
+    class Model {
+        +vector~Mesh~ meshes
+        +vector~Texture~ textures_loaded
+        +string directory
+        +bool gammaCorrection
+        +loadModel(path)
+        +Draw(shader)
+        -processNode(node, scene)
+        -processMesh(mesh, scene)
+    }
+
+    class Mesh {
+        +vector~Vertex~ vertices
+        +vector~unsigned int~ indices
+        +vector~Texture~ textures
+        +unsigned int VAO, VBO, EBO
+        +Draw(shader)
+        -setupMesh()
+    }
+
+    class Shader {
+        +unsigned int ID
+        +use()
+        +setBool(name, value)
+        +setInt(name, value)
+        +setFloat(name, value)
+        +setVec3(name, value)
+        +setMat4(name, value)
+    }
+
+    class Skybox {
+        +unsigned int textureID
+        +unsigned int VAO, VBO
+        +Shader shader
+        +Draw(view, projection)
+        -loadCubemap(faces)
+    }
+
+    class TextRenderer {
+        +map~char, Character~ Characters
+        +Shader shader
+        +glm::mat4 projection
+        +float deltaTime
+        +RenderText(text, x, y, scale, color)
+    }
+
+    class Character {
+        +unsigned int TextureID
+        +glm::ivec2 Size
+        +glm::ivec2 Bearing
+        +unsigned int Advance
+    }
+
+    %% Relationships
+    Player "1" --o "1" AABBox : has
+    Player "1" --o "1" Model : has gun
+    Player "1" --o "1" Shader : uses
+    
+    Enemy "1" --o "1" AABBox : has
+    Enemy "1" --o "2" Model : has drone+laser
+    Enemy "1" --o "2" Shader : uses
+    
+    EnemyManager "1" --o "0..*" Enemy : manages
+    
+    World "1" --o "1" Skybox : contains
+    World "1" --o "3..*" Model : contains
+    World "1" --o "3..*" Shader : uses
+    
+    CollisionDetector ..> Player : checks
+    CollisionDetector ..> Enemy : checks
+    CollisionDetector ..> AABBox : uses
+    CollisionDetector ..> Ray : uses
+    
+    AABBox ..> Ray : intersect with
+    
+    Model "1" --o "1..*" Mesh : contains
+    
+    TextRenderer "1" --o "0..*" Character : manages
+    TextRenderer "1" --o "1" Shader : uses
+    
+    Skybox "1" --o "1" Shader : uses
+
+```
+
+**Class Diagram Legend:**
+- **Solid lines with diamond (--o)**: Composition (strong ownership)
+- **Dashed lines with arrow (..>)**: Dependency (uses but doesn't own)
+- **Numbers (1, 0..*, etc.)**: Cardinality (how many instances)
+
+**Key Relationships:**
+1. **Player** owns an AABBox, Model (gun), and Shader
+2. **Enemy** owns AABBox, two Models (drone + laser), and two Shaders
+3. **EnemyManager** manages multiple Enemy instances via shared pointers
+4. **World** contains Skybox and multiple terrain Models
+5. **CollisionDetector** depends on Player, Enemy, AABBox, and Ray for intersection tests
+6. **Model** is composed of multiple Mesh objects
+7. **TextRenderer** manages multiple Character glyphs and uses a Shader
+
+### 4.4 Data Flow
 
 #### Game Initialization
 ```
